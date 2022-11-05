@@ -3,7 +3,7 @@ from OpenGL.GL import *
 import utils
 import math
 
-dimensions = utils.Coord(750, 750)
+dimensions = utils.Coord(400, 400)
 bounds = utils.Coord(dimensions.x / 2, dimensions.y / 2)
 viewport = utils.Viewport(bounds)
 

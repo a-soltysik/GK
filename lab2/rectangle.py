@@ -20,7 +20,7 @@ def shutdown():
 
 def render(time):
     glClear(GL_COLOR_BUFFER_BIT)
-    utils.make_distorted_rectangle(utils.Coord(0, 0), utils.Coord(150, 100), background, 1.0)
+    utils.make_distorted_rectangle(utils.Coord(0, 0), utils.Coord(150, 100), [0.8, 0.6, 0.9], 0.5)
     glFlush()
 
 
@@ -29,7 +29,8 @@ def main():
                        startup=startup,
                        render=render,
                        shutdown=shutdown,
-                       viewport=viewport)
+                       viewport=viewport,
+                       wait_for_event=True)
 
 
 if __name__ == '__main__':

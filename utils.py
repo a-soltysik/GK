@@ -15,11 +15,12 @@ class Coord:
 
 
 class Viewport:
-    def __init__(self, bounds: Coord):
+    def __init__(self, bounds: Coord, near_depth=100, far_depth=-100):
         self.bounds = bounds
+        self.near_depth = near_depth
+        self.far_depth = far_depth
 
     def __call__(self, window, dimensions: Coord):
-        print("a")
         if dimensions.y == 0:
             dimensions.y = 1
         if dimensions.x == 0:
@@ -35,15 +36,15 @@ class Viewport:
                     self.bounds.x,
                     -self.bounds.y / aspect_ratio,
                     self.bounds.y / aspect_ratio,
-                    1.0,
-                    -1.0)
+                    self.near_depth,
+                    self.far_depth)
         else:
             glOrtho(-self.bounds.x * aspect_ratio,
                     self.bounds.x * aspect_ratio,
                     -self.bounds.y,
                     -self.bounds.y,
-                    1.0,
-                    -1.0)
+                    self.near_depth,
+                    self.far_depth)
 
         glMatrixMode(GL_MODELVIEW)
         glLoadIdentity()
@@ -64,13 +65,13 @@ def make_window(dimensions: Coord, viewport):
     return window
 
 
-def default_init(dimensions: Coord, startup, render, shutdown, viewport):
+def default_init(dimensions: Coord, startup, render, shutdown, viewport, wait_for_event=False):
     window = make_window(dimensions, viewport)
     startup()
     while not glfwWindowShouldClose(window):
         render(glfwGetTime())
         glfwSwapBuffers(window)
-        glfwWaitEvents()
+        glfwWaitEvents() if wait_for_event else glfwPollEvents()
 
     shutdown()
 
@@ -83,7 +84,7 @@ def one_frame_init(dimensions: Coord, startup, shutdown, viewport):
     glfwSwapBuffers(window)
 
     while not glfwWindowShouldClose(window):
-        glfwWaitEvents()
+        glfwPollEvents()
 
     shutdown()
 
@@ -120,3 +121,26 @@ def make_distorted_rectangle(center: Coord, sides: Coord, color3_array, d):
 
 def lerp(val1: Coord, val2: Coord, x: float):
     return ((val2.y - val1.y) * x + val2.x * val1.y - val1.x * val2.y) / (val2.x - val1.x)
+
+
+def axes(x, y, z):
+    glBegin(GL_LINES)
+
+    glColor3f(1.0, 0.0, 0.0)
+    glVertex3f(-x, 0.0, 0.0)
+    glVertex3f(x, 0.0, 0.0)
+
+    glColor3f(0.0, 1.0, 0.0)
+    glVertex3f(0.0, -y, 0.0)
+    glVertex3f(0.0, y, 0.0)
+
+    glColor3f(0.0, 0.0, 1.0)
+    glVertex3f(0.0, 0.0, -z)
+    glVertex3f(0.0, 0.0, z)
+    glEnd()
+
+def spin(angle):
+    glRotatef(angle, 1.0, 0.0, 0.0)
+    glRotatef(angle, 0.0, 1.0, 0.0)
+    glRotatef(angle, 0.0, 0.0, 1.0)
+
