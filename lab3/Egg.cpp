@@ -19,7 +19,7 @@ auto Egg::run(Vector2i dimensions, uint32_t resolution, bool vsync) -> void
                        vsync);
 }
 
-auto Egg::startup() -> void
+auto Egg::startup() const -> void
 {
     glEnable(GL_DEPTH_TEST);
     glClearColor(0.5f, 0.5f, 0.5f, 0.1f);

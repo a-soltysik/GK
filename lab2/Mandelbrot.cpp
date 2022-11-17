@@ -19,7 +19,7 @@ auto Mandelbrot::run(Vector2i dimensions, bool vsync) -> void
                        vsync);
 }
 
-auto Mandelbrot::startup() -> void
+auto Mandelbrot::startup() const -> void
 {
     glClearColor(0.5f, 0.5f, 0.5f, 0.1f);
     utils::viewport(nullptr, dimensions.x, dimensions.y);
@@ -37,7 +37,7 @@ auto Mandelbrot::render([[maybe_unused]] double time) -> void
     glFlush();
 }
 
-auto Mandelbrot::makeMandelbrotSet(Vector2f topLeft, Vector2f bottomRight) -> void
+auto Mandelbrot::makeMandelbrotSet(Vector2f topLeft, Vector2f bottomRight) const -> void
 {
     glColor3ub(56, 127, 230);
     glBegin(GL_POINTS);
@@ -45,8 +45,8 @@ auto Mandelbrot::makeMandelbrotSet(Vector2f topLeft, Vector2f bottomRight) -> vo
     {
         for (auto j = 0; j < dimensions.y; j++)
         {
-            const auto coord = Vector2f {topLeft.x + (static_cast<float>(i) * (bottomRight.x - topLeft.x) / dimensions.x),
-                                         topLeft.y + (static_cast<float>(j) * (bottomRight.y - topLeft.y) / dimensions.y)};
+            const auto coord = Vector2f {topLeft.x + (static_cast<float>(i) * (bottomRight.x - topLeft.x) / static_cast<float>(dimensions.x)),
+                                         topLeft.y + (static_cast<float>(j) * (bottomRight.y - topLeft.y) / static_cast<float>(dimensions.y))};
 
             if (isConvergent(coord, 30))
             {

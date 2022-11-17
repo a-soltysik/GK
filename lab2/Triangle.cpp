@@ -17,7 +17,7 @@ auto Triangle::run(Vector2i dimensions, bool vsync) -> void
                        vsync);
 }
 
-auto Triangle::startup() -> void
+auto Triangle::startup() const -> void
 {
     glClearColor(0.5f, 0.5f, 0.5f, 0.1f);
     utils::viewport(nullptr, dimensions.x, dimensions.y);

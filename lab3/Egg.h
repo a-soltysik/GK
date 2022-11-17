@@ -13,11 +13,11 @@ public:
     auto run(Vector2i dimensions, uint32_t resolution, bool vsync = false) -> void;
 
 private:
-    auto startup() -> void;
+    auto startup() const -> void;
     auto shutdown() -> void;
     auto render(double) -> void;
     auto makeEgg() -> void;
-    auto makeEggVertices(size_t N) -> std::vector<std::vector<std::vector<float>>>;
+    static auto makeEggVertices(size_t N) -> std::vector<std::vector<std::vector<float>>>;
 
     static constexpr auto bounds = Vector2f {7.5f, 7.5f};
     static constexpr auto nearDepth = 8.f;
