@@ -1,6 +1,8 @@
 #include <GLFW/glfw3.h>
 
 #include <cmath>
+#include <numbers>
+#include <numeric>
 
 #include "Egg.h"
 
@@ -14,7 +16,7 @@ auto Egg::run(Vector2i dimensions, uint32_t resolution, bool vsync) -> void
     utils::configureViewport(bounds, nearDepth, farDepth);
     utils::defaultInit(dimensions,
                        [this] { startup(); },
-                       [this](auto time) { render(time); },
+                       [this](auto time) { render(); },
                        [this] { shutdown(); },
                        vsync);
 }
@@ -31,7 +33,7 @@ auto Egg::shutdown() -> void
 
 }
 
-auto Egg::render(double time) -> void
+auto Egg::render() -> void
 {
     glClear(GL_DEPTH_BUFFER_BIT | GL_COLOR_BUFFER_BIT);
     glLoadIdentity();
@@ -49,24 +51,19 @@ auto Egg::makeEgg() -> void
     {
         for (auto j = size_t {}; j < vertices.size(); j++)
         {
-            glColor3f(std::lerp(0.f, 1.f, static_cast<float>(j) / (static_cast<float>(vertices.size() - 1))),
-                      std::lerp(0.f, 1.f, static_cast<float>(i) / (static_cast<float>(vertices.size() - 1))),
-                      std::lerp(0.f, 1.f,
-                                static_cast<float>(std::midpoint(i, j)) / static_cast<float>(vertices.size() - 1)));
-            glVertex3fv(vertices[i][j].data());
-            glVertex3fv(vertices[i + 1][j].data());
+            glColor3fv(vertices[i][j].second.toBytes());
+            glVertex3fv(vertices[i][j].first.toBytes());
+
+            glColor3fv(vertices[i + 1][j].second.toBytes());
+            glVertex3fv(vertices[i + 1][j].first.toBytes());
         }
     }
     glEnd();
 }
 
-auto Egg::makeEggVertices(size_t N) -> std::vector<std::vector<std::vector<float>>>
+auto Egg::makeEggVertices(size_t N) -> std::vector<std::vector<std::pair<Vector3f, Color3f>>>
 {
-    static auto vertices = std::vector<std::vector<std::vector<float>>>(
-        N,
-        std::vector<std::vector<float>>(N,
-                                        std::vector<float>(3,
-                                                           0.f)));
+    static auto vertices = std::vector(N, std::vector(N, std::pair<Vector3f, Color3f>{}));
 
     for (auto i = size_t {}; i < N; i++)
     {
@@ -74,14 +71,17 @@ auto Egg::makeEggVertices(size_t N) -> std::vector<std::vector<std::vector<float
         {
             const auto u = static_cast<float>(i) / static_cast<float>(N - 1);
             const auto v = static_cast<float>(j) / static_cast<float>(N - 1);
-            vertices[i][j][0] = static_cast<float>(
+            vertices[i][j].first.x = static_cast<float>(
                 (-90. * std::pow(u, 5) + 225. * std::pow(u, 4) - 270. * std::pow(u, 3) + 180. * std::pow(u, 2) -
                  45. * u) * std::cos(std::numbers::pi * v));
-            vertices[i][j][1] = static_cast<float>(160. * std::pow(u, 4) - 320. * std::pow(u, 3) +
+            vertices[i][j].first.y = static_cast<float>(160. * std::pow(u, 4) - 320. * std::pow(u, 3) +
                                                    160. * std::pow(u, 2) - 5.);
-            vertices[i][j][2] = static_cast<float>(
+            vertices[i][j].first.z = static_cast<float>(
                 (-90. * std::pow(u, 5) + 225. * std::pow(u, 4) - 270. * std::pow(u, 3) + 180. * std::pow(u, 2) -
                  45. * u) * std::sin(std::numbers::pi * v));
+
+            const auto colorVal = std::lerp(0.f, 1.f, u);
+            vertices[i][j].second = {0.5f, colorVal, 0.7f};
         }
     }
     return vertices;

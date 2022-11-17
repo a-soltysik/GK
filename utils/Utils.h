@@ -5,22 +5,9 @@
 #include <random>
 
 #include "Clock.h"
+#include "Types.h"
 
-namespace gk
-{
-
-template<typename T>
-struct Vector2
-{
-    T x;
-    T y;
-};
-
-using Vector2f = Vector2<float>;
-using Vector2u = Vector2<uint32_t>;
-using Vector2i = Vector2<int>;
-
-namespace utils
+namespace gk::utils
 {
 
 auto configureViewport(Vector2f bounds, float nearDepth = 100.f, float farDepth = -100.f) -> void;
@@ -67,6 +54,4 @@ auto getRandom(T from, T to) -> T
     return distribution(rng);
 }
 
-
-}
 }
