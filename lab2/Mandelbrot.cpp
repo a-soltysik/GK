@@ -3,7 +3,7 @@
 
 #include "Mandelbrot.h."
 
-namespace gk
+namespace gk::lab3
 {
 
 auto Mandelbrot::run(Vector2i dimensions, bool vsync) -> void
@@ -16,6 +16,7 @@ auto Mandelbrot::run(Vector2i dimensions, bool vsync) -> void
                        [this] { startup(); },
                        [this](auto time) { render(time); },
                        [this] { shutdown(); },
+                       utils::Dimensions::_2D,
                        vsync);
 }
 

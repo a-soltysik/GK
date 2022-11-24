@@ -1,3 +1,5 @@
+#include <GL/glu.h>
+
 #include <cstdlib>
 
 #include "Utils.h"
@@ -8,6 +10,8 @@ namespace gk::utils
 static auto gBounds    = Vector2f {};
 static auto gNearDepth = 100.f;
 static auto gFarDepth  = 100.f;
+
+
 
 auto configureViewport(Vector2f bounds, float nearDepth, float farDepth) -> void
 {
@@ -27,11 +31,18 @@ auto viewport([[maybe_unused]] GLFWwindow* window, int width, int height) -> voi
         width = 1;
     }
 
+    MouseHandler::instance().setMouseMoveToAngleRatio(360.f / static_cast<float>(width));
+
     const auto aspectRatio = static_cast<float>(width) / static_cast<float>(height);
 
     glMatrixMode(GL_PROJECTION);
     glViewport(0, 0, width, height);
     glLoadIdentity();
+
+    if (Config::instance().dimensions == Config::Dimensions::_3D)
+    {
+        gluPerspective(70., 1., 0.1, 300.);
+    }
 
     if (width <= height)
     {
@@ -45,14 +56,14 @@ auto viewport([[maybe_unused]] GLFWwindow* window, int width, int height) -> voi
     glLoadIdentity();
 }
 
-auto makeWindow(Vector2i dimensions, bool vsync) -> GLFWwindow*
+auto makeWindow(Vector2i size, bool vsync) -> GLFWwindow*
 {
     if (!glfwInit())
     {
         std::exit(-1);
     }
 
-    auto* window = glfwCreateWindow(static_cast<int>(dimensions.x), static_cast<int>(dimensions.y), __FILE__, nullptr,
+    auto* window = glfwCreateWindow(static_cast<int>(size.x), static_cast<int>(size.y), __FILE__, nullptr,
                                     nullptr);
     if (!window)
     {
@@ -91,4 +102,7 @@ auto spin(float angle) -> void
     glRotatef(angle, 0.f, 1.f, 0.f);
     glRotatef(angle, 0.f, 0.f, 1.f);
 }
+
+
+
 }

@@ -3,7 +3,7 @@
 
 #include "Sierpinski.h"
 
-namespace gk
+namespace gk::lab3
 {
 
 auto Sierpinski::run(Vector2i dimensions, uint32_t level, bool vsync) -> void
@@ -16,6 +16,7 @@ auto Sierpinski::run(Vector2i dimensions, uint32_t level, bool vsync) -> void
                        [this] { startup(); },
                        [this](auto time) { render(time); },
                        [this] { shutdown(); },
+                       utils::Dimensions::_2D,
                        vsync);
 }
 

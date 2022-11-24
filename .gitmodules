@@ -4,3 +4,6 @@
 [submodule "ext/FastNoise2"]
 	path = ext/FastNoise2
 	url = git@github.com:Auburn/FastNoise2.git
+[submodule "ext/glut"]
+	path = ext/glut
+	url = git@github.com:FreeGLUTProject/freeglut.git

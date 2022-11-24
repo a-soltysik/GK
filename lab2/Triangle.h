@@ -2,7 +2,7 @@
 
 #include "Utils.h"
 
-namespace gk
+namespace gk::lab3
 {
 
 class Triangle

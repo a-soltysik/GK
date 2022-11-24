@@ -1,4 +1,4 @@
-set(TARGET_NAME lab3)
+set(TARGET_NAME lab4)
 set(${TARGET_NAME}_SRC_DIR ${PROJECT_SOURCE_DIR}/${TARGET_NAME})
 
 file(GLOB_RECURSE ${TARGET_NAME}_SRC_LIST
@@ -8,19 +8,16 @@ file(GLOB_RECURSE ${TARGET_NAME}_SRC_LIST
 
 add_executable(${TARGET_NAME} ${${TARGET_NAME}_SRC_LIST} ${UTILS_SRC_LIST})
 
-if (NOT TARGET FastNoise)
-    add_subdirectory(${PROJECT_SOURCE_DIR}/ext/FastNoise2 ${PROJECT_BINARY_DIR}/ext/FastNoise2)
-endif()
-target_link_libraries(${TARGET_NAME} PRIVATE FastNoise)
-
 if (NOT TARGET glfw)
     add_subdirectory(${PROJECT_SOURCE_DIR}/ext/glfw ${PROJECT_BINARY_DIR}/ext/glfw3)
 endif()
+
 target_link_libraries(${TARGET_NAME} PRIVATE glfw)
 
 if (NOT TARGET freeglut)
     add_subdirectory(${PROJECT_SOURCE_DIR}/ext/glut ${PROJECT_BINARY_DIR}/ext/glut)
 endif()
+
 target_link_libraries(${TARGET_NAME} PRIVATE freeglut)
 
 find_package(OpenGL REQUIRED)

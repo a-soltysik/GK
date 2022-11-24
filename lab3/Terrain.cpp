@@ -7,7 +7,7 @@
 #include "Terrain.h"
 #include "FastNoise/FastNoise.h"
 
-namespace gk
+namespace gk::lab3
 {
 
 auto Terrain::run(Vector2i dimensions, uint32_t resolution, bool vsync) -> void
@@ -19,6 +19,7 @@ auto Terrain::run(Vector2i dimensions, uint32_t resolution, bool vsync) -> void
                        [this] { startup(); },
                        [this](auto time) { render(time); },
                        [this] { shutdown(); },
+                       utils::Dimensions::_2D,
                        vsync);
 }
 

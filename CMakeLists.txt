@@ -14,18 +14,7 @@ endif ()
 set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} ${CMAKE_CXX_FLAGS}")
 set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} ${COMPILER_REL_CXX_FLAGS}")
 
-set(GLFW_BUILD_DOCS OFF CACHE BOOL "" FORCE)
-set(GLFW_BUILD_TESTS OFF CACHE BOOL "" FORCE)
-set(GLFW_BUILD_EXAMPLES OFF CACHE BOOL "" FORCE)
-
-add_subdirectory(ext/glfw)
-
-include_directories(ext/glfw/include utils)
-link_directories(ext/glfw/src)
-link_libraries(glfw)
-
-find_package(OpenGL REQUIRED)
-link_libraries(OpenGL::GL)
+include_directories(utils)
 
 file(GLOB_RECURSE UTILS_SRC_LIST
     utils/*.h
@@ -34,4 +23,5 @@ file(GLOB_RECURSE UTILS_SRC_LIST
 
 add_subdirectory(lab2)
 add_subdirectory(lab3)
+add_subdirectory(lab4)
 

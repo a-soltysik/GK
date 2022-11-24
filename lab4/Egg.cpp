@@ -2,50 +2,21 @@
 
 #include <cmath>
 #include <numbers>
-#include <numeric>
 
 #include "Egg.h"
-#include "../lab4/Egg.h"
 
-
-namespace gk::lab3
+namespace gk::lab4
 {
 
-auto Egg::run(Vector2i dimensions, uint32_t resolution, bool vsync) -> void
-{
-    this->dimensions = dimensions;
-    vertices = makeEggVertices(resolution);
-
-    utils::configureViewport(bounds, nearDepth, farDepth);
-    utils::defaultInit(dimensions,
-                       [this] { startup(); },
-                       [this] (auto time) { render(); },
-                       [this] { shutdown(); },
-                       utils::Dimensions::_2D,
-                       vsync);
-}
-
-auto Egg::startup() const -> void
-{
-    glEnable(GL_DEPTH_TEST);
-    glClearColor(0.5f, 0.5f, 0.5f, 0.1f);
-    utils::viewport(nullptr, dimensions.x, dimensions.y);
-}
-
-auto Egg::shutdown() -> void
+Egg::Egg(uint32_t resolution)
+    : vertices(makeEggVertices(resolution))
 {
 
 }
 
-auto Egg::render() -> void
+auto Egg::render([[maybe_unused]] double time) -> void
 {
-    glClear(GL_DEPTH_BUFFER_BIT | GL_COLOR_BUFFER_BIT);
-    glLoadIdentity();
-
-    utils::spin(static_cast<float>(glfwGetTime() * 180.0 / std::numbers::pi));
-    utils::axes(6, 6, 6);
     makeEgg();
-    glFlush();
 }
 
 auto Egg::makeEgg() -> void
@@ -79,7 +50,7 @@ auto Egg::makeEggVertices(size_t N) -> std::vector<std::vector<std::pair<Vector3
                 (-90. * std::pow(u, 5) + 225. * std::pow(u, 4) - 270. * std::pow(u, 3) + 180. * std::pow(u, 2) -
                  45. * u) * std::cos(std::numbers::pi * v));
             vertices[i][j].first.y = static_cast<float>(160. * std::pow(u, 4) - 320. * std::pow(u, 3) +
-                                                   160. * std::pow(u, 2) - 5.);
+                                                        160. * std::pow(u, 2) - 5.);
             vertices[i][j].first.z = static_cast<float>(
                 (-90. * std::pow(u, 5) + 225. * std::pow(u, 4) - 270. * std::pow(u, 3) + 180. * std::pow(u, 2) -
                  45. * u) * std::sin(std::numbers::pi * v));
@@ -90,7 +61,6 @@ auto Egg::makeEggVertices(size_t N) -> std::vector<std::vector<std::pair<Vector3
     }
     return vertices;
 }
-
 
 }
 
