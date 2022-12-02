@@ -1,9 +1,18 @@
 #pragma once
 
+#if defined(_WIN32)
+#if !defined(NOMINMAX)
+#define NOMINMAX
+#endif
+#include <Windows.h>
+#endif
+#include <GLFW/glfw3.h>
+
 #include <concepts>
 #include <cstdint>
 #include <cmath>
 #include <iostream>
+#include <vector>
 
 #define VAR(x) #x
 
@@ -41,10 +50,38 @@ struct Vector3
     T x;
     T y;
     T z;
+
     auto toBytes() const -> const T*
     {
         return &x;
     }
+};
+
+template<typename T>
+struct Vector4
+{
+    T x;
+    T y;
+    T z;
+    T w;
+    auto toBytes() const -> const T*
+    {
+        return &x;
+    }
+};
+
+template<typename T>
+struct Vertex3
+{
+    Vector3<T> vertex;
+    Vector3<T> normal;
+};
+
+template<typename T>
+struct Vertices3
+{
+    std::vector<Vertex3<T>> vertices;
+    std::vector<size_t> indices;
 };
 
 using Color3f = Color3<float>;
@@ -60,8 +97,33 @@ using Vector3f = Vector3<float>;
 using Vector3u = Vector3<uint32_t>;
 using Vector3i = Vector3<int>;
 
+using Vector4f = Vector4<float>;
+
+using Vertex3f = Vertex3<float>;
+using Vertices3f = Vertices3<float>;
+
+
+
 namespace vec
 {
+
+template<typename T>
+constexpr auto UP = Vector3<T>{static_cast<T>(0), static_cast<T>(1), static_cast<T>(0)};
+
+template<typename T>
+constexpr auto DOWN = Vector3<T>{static_cast<T>(0), static_cast<T>(-1), static_cast<T>(0)};
+
+template<typename T>
+constexpr auto LEFT = Vector3<T>{static_cast<T>(-1), static_cast<T>(0), static_cast<T>(0)};
+
+template<typename T>
+constexpr auto RIGHT = Vector3<T>{static_cast<T>(1), static_cast<T>(0), static_cast<T>(0)};
+
+template<typename T>
+constexpr auto FORWARD = Vector3<T>{static_cast<T>(0), static_cast<T>(0), static_cast<T>(1)};
+
+template<typename T>
+constexpr auto BACK = Vector3<T>{static_cast<T>(0), static_cast<T>(0), static_cast<T>(-1)};
 
 template<typename T>
 constexpr auto subtract(Vector3<T> v1, Vector3<T> v2) noexcept -> Vector3<T>
@@ -79,6 +141,12 @@ template<typename T>
 constexpr auto multiply(Vector3<T> v1, T value) noexcept -> Vector3<T>
 {
     return {v1.x * value, v1.y * value, v1.z * value};
+}
+
+template<typename T>
+constexpr auto multiply(Vector4<T> v1, T value) noexcept -> Vector4<T>
+{
+    return {v1.x * value, v1.y * value, v1.z * value, v1.w * value};
 }
 
 template<typename T>
@@ -124,6 +192,22 @@ constexpr auto cross(Vector3<T> v1, Vector3<T> v2) -> Vector3<T>
     };
 }
 
+template<typename T>
+constexpr auto vec3from(Vector4<T> v1) -> Vector3<T>
+{
+    return {
+        v1.x, v1.y, v1.z
+    };
+}
+
+template<typename T>
+constexpr auto vec4from(Vector3<T> v1, T w = static_cast<T>(1)) -> Vector4<T>
+{
+    return {
+        v1.x, v1.y, v1.z, w
+    };
+}
+
 
 template<typename T>
 auto print(std::string_view name, Vector3<T> v1) -> void
@@ -135,6 +219,14 @@ template<typename T>
 auto print(Vector3<T> v1) -> void
 {
     print("vec", v1);
+}
+
+inline auto draw(Vector3f start, Vector3f direction) -> void
+{
+    glBegin(GL_LINES);
+    glVertex3fv(start.toBytes());
+    glVertex3fv(vec::add(start, direction).toBytes());
+    glEnd();
 }
 
 

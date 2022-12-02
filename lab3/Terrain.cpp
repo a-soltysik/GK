@@ -1,9 +1,16 @@
+#if defined(_WIN32)
+#if !defined(NOMINMAX)
+#define NOMINMAX
+#endif
+#include <Windows.h>
+#endif
 #include <GLFW/glfw3.h>
 
 #include <cmath>
 #include <numbers>
 #include <iostream>
 
+#include "Utils.h"
 #include "Terrain.h"
 #include "FastNoise/FastNoise.h"
 
@@ -19,7 +26,7 @@ auto Terrain::run(Vector2i dimensions, uint32_t resolution, bool vsync) -> void
                        [this] { startup(); },
                        [this](auto time) { render(time); },
                        [this] { shutdown(); },
-                       utils::Dimensions::_2D,
+                       utils::Config::Dimensions::_2D,
                        vsync);
 }
 

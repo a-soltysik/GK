@@ -1,5 +1,12 @@
 #pragma once
 
+#if defined(_WIN32)
+#if !defined(NOMINMAX)
+#define NOMINMAX
+#endif
+#include <Windows.h>
+#endif
+
 #include <GLFW/glfw3.h>
 
 #include <concepts>
@@ -64,5 +71,8 @@ auto getRandom(T from, T to) -> T
     auto distribution = std::uniform_real_distribution {from, to};
     return distribution(rng);
 }
+
+template<class... Ts> struct match : Ts... { using Ts::operator()...; };
+template<class... Ts> match(Ts...) -> match<Ts...>;
 
 }

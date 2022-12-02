@@ -5,6 +5,6 @@
 
 int main()
 {
-    gk::Mandelbrot{}.run(gk::Vector2i {800, 800});
+    gk::lab2::Mandelbrot{}.run(gk::Vector2i {800, 800});
     return 0;
 }

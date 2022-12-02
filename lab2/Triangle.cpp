@@ -1,9 +1,16 @@
+#if defined(_WIN32)
+#if !defined(NOMINMAX)
+#define NOMINMAX
+#endif
+#include <Windows.h>
+#endif
 #include <GLFW/glfw3.h>
+
 #include <numbers>
 
 #include "Triangle.h"
 
-namespace gk::lab3
+namespace gk::lab2
 {
 
 auto Triangle::run(Vector2i dimensions, bool vsync) -> void
@@ -12,9 +19,9 @@ auto Triangle::run(Vector2i dimensions, bool vsync) -> void
     utils::configureViewport(bounds, nearDepth, farDepth);
     utils::defaultInit(dimensions,
                        [this] { startup(); },
-                       [this](auto time) { render(time); },
+                       [](auto time) { render(time); },
                        [this] { shutdown(); },
-                       utils::Dimensions::_2D,
+                       utils::Config::Dimensions::_2D,
                        vsync);
 }
 

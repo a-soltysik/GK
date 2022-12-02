@@ -37,7 +37,6 @@ private:
     static constexpr auto farDepth = -8.f;
 
     utils::SceneScaleMouseHandler scaleHandler;
-    utils::SceneMovementHandler movementHandler;
     std::unique_ptr<Renderable> object;
     Vector3f camera = {0.f, 0.f, 10.f};
     Vector2i dimensions;

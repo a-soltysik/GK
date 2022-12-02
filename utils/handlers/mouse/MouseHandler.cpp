@@ -4,15 +4,6 @@
 namespace gk::utils
 {
 
-static auto mouseMoveToAngleRatio = 0.f;
-static auto mousePosition = Vector2f {};
-static auto deltaMouse = Vector2f {};
-
-auto mouseMoveToAngle() -> Vector2f
-{
-    return {deltaMouse.y * mouseMoveToAngleRatio, deltaMouse.x * mouseMoveToAngleRatio};
-}
-
 auto mouseButtonCallback(GLFWwindow* window, int button, int action, int mods) -> void
 {
     for (const auto& callback : MouseHandler::instance().mouseButtonCallbacks)

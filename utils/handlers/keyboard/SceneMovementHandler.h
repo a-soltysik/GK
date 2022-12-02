@@ -7,13 +7,16 @@
 namespace gk::utils
 {
 
-class SceneMovementHandler
+class SceneMovementHandler : public Singleton<SceneMovementHandler>
 {
 public:
-    SceneMovementHandler();
     [[nodiscard]] auto getSceneMovement() const -> Vector3f;
+
 private:
+    SceneMovementHandler();
     std::unordered_set<int> keysDown;
+
+    friend class Singleton<SceneMovementHandler>;
 };
 
 }

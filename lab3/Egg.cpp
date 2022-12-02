@@ -1,12 +1,15 @@
+#if defined(_WIN32)
+#if !defined(NOMINMAX)
+#define NOMINMAX
+#endif
+#include <Windows.h>
+#endif
 #include <GLFW/glfw3.h>
 
 #include <cmath>
 #include <numbers>
-#include <numeric>
 
 #include "Egg.h"
-#include "../lab4/Egg.h"
-
 
 namespace gk::lab3
 {
@@ -19,9 +22,9 @@ auto Egg::run(Vector2i dimensions, uint32_t resolution, bool vsync) -> void
     utils::configureViewport(bounds, nearDepth, farDepth);
     utils::defaultInit(dimensions,
                        [this] { startup(); },
-                       [this] (auto time) { render(); },
+                       [this] (auto) { render(); },
                        [this] { shutdown(); },
-                       utils::Dimensions::_2D,
+                       utils::Config::Dimensions::_2D,
                        vsync);
 }
 

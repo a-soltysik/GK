@@ -38,7 +38,7 @@ auto SceneRotationMouseHandler::registerCallbacks(Vector2d min, Vector2d max) ->
         }
     });
     MouseHandler::instance().addMouseMotionCallback([this, min, max](auto, double x, double y) {
-        if (isLeftMouseButtonPressed)
+        if (isLeftMouseButtonPressed && !isPaused)
         {
             const auto ratio = MouseHandler::getPixelsToAngleRatio();
             angles = {angles.x + (y - lastPosition.y) * ratio.x, angles.y + (x - lastPosition.x) * ratio.y};
@@ -50,6 +50,16 @@ auto SceneRotationMouseHandler::registerCallbacks(Vector2d min, Vector2d max) ->
         }
         lastPosition = {x, y};
     });
+}
+
+auto SceneRotationMouseHandler::pause() -> void
+{
+    isPaused = true;
+}
+
+auto SceneRotationMouseHandler::start() -> void
+{
+    isPaused = false;
 }
 
 }

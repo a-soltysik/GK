@@ -1,3 +1,5 @@
+#include <algorithm>
+
 #include "SceneMovementHandler.h"
 
 namespace gk::utils

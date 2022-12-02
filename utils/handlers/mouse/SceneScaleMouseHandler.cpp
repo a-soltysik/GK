@@ -17,7 +17,7 @@ SceneScaleMouseHandler::SceneScaleMouseHandler()
         }
     });
     MouseHandler::instance().addMouseMotionCallback([this](auto, double x, double y) {
-        if (isRightMouseButtonPressed)
+        if (isRightMouseButtonPressed && !isPaused)
         {
             scale = std::max(scale + (y - lastPosition.y) / 100.0, 0.1);
         }
@@ -33,6 +33,16 @@ auto SceneScaleMouseHandler::getSceneScale() const -> double
 auto SceneScaleMouseHandler::reset() -> void
 {
     scale = 1.0;
+}
+
+auto SceneScaleMouseHandler::pause() -> void
+{
+    isPaused = true;
+}
+
+auto SceneScaleMouseHandler::start() -> void
+{
+    isPaused = false;
 }
 
 }

@@ -1,3 +1,9 @@
+#if defined(_WIN32)
+#if !defined(NOMINMAX)
+#define NOMINMAX
+#endif
+#include <Windows.h>
+#endif
 #include <GLFW/glfw3.h>
 
 #include <cmath>

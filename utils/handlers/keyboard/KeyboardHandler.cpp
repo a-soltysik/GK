@@ -8,7 +8,7 @@ auto KeyboardHandler::addKeyCallback(gk::utils::KeyboardHandler::KeyCallback cal
     keyCallbacks.push_back(std::move(callback));
 }
 
-auto keyCallback(GLFWwindow* window, int key, int scancode, int action ,int mods) -> void
+auto keyCallback(GLFWwindow* window, int key, int scancode, int action, int mods) -> void
 {
     for (const auto& callback : KeyboardHandler::instance().keyCallbacks)
     {

@@ -2,7 +2,7 @@
 
 #include "Utils.h"
 
-namespace gk::lab3
+namespace gk::lab2
 {
 
 class Rectangle

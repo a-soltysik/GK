@@ -1,9 +1,17 @@
+#if defined(_WIN32)
+#if !defined(NOMINMAX)
+#define NOMINMAX
+#endif
+#include <Windows.h>
+#endif
+
 #include <GLFW/glfw3.h>
+
 #include <complex>
 
 #include "Mandelbrot.h."
 
-namespace gk::lab3
+namespace gk::lab2
 {
 
 auto Mandelbrot::run(Vector2i dimensions, bool vsync) -> void
@@ -16,7 +24,7 @@ auto Mandelbrot::run(Vector2i dimensions, bool vsync) -> void
                        [this] { startup(); },
                        [this](auto time) { render(time); },
                        [this] { shutdown(); },
-                       utils::Dimensions::_2D,
+                       utils::Config::Dimensions::_2D,
                        vsync);
 }
 

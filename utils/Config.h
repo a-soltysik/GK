@@ -15,7 +15,7 @@ public:
         _3D
     };
 
-    Vector3f velocity = {1.5f, 1.5f, 1.5f};
+    Vector3f velocity = {2.5f, 2.5f, 2.5f};
     GLFWwindow* window = nullptr;
     Dimensions dimensions = Dimensions::_3D;
 };

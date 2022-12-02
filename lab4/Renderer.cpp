@@ -1,3 +1,9 @@
+#if defined(_WIN32)
+#if !defined(NOMINMAX)
+#define NOMINMAX
+#endif
+#include <Windows.h>
+#endif
 #include <GL/glu.h>
 
 #include "Renderer.h"
@@ -111,7 +117,7 @@ auto Renderer::getCameraDirection() -> Vector3f
 
 auto Renderer::getVelocity(Vector3f cameraFront, Vector3f cameraUp) -> Vector3f
 {
-    const auto moveDirection = movementHandler.getSceneMovement();
+    const auto moveDirection = utils::SceneMovementHandler::instance().getSceneMovement();
 
     auto move = Vector3f {};
     if (moveDirection.z != 0.f)
