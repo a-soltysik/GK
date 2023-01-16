@@ -25,7 +25,7 @@ private:
 
     // Free roam
     static auto getCameraDirection() -> Vector3f;
-    auto getVelocity(Vector3f cameraFront, Vector3f cameraUp) -> Vector3f;
+    static auto getVelocity(Vector3f cameraFront, Vector3f cameraUp) -> Vector3f;
 
     // Move around
     auto rotateAroundGlStyle() -> void;

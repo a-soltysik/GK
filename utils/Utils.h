@@ -11,11 +11,14 @@
 
 #include <concepts>
 #include <random>
+#include <optional>
+#include <filesystem>
 
 #include "Clock.h"
 #include "Handlers/Mouse/MouseHandler.h"
 #include "Handlers/Keyboard/KeyboardHandler.h"
 #include "Config.h"
+#include "Texture.h"
 
 namespace gk::utils
 {

@@ -38,6 +38,7 @@ struct Vector2
     T x;
     T y;
 
+    [[nodiscard]]
     auto toBytes() const -> const T*
     {
         return &x;
@@ -51,6 +52,7 @@ struct Vector3
     T y;
     T z;
 
+    [[nodiscard]]
     auto toBytes() const -> const T*
     {
         return &x;
@@ -64,6 +66,8 @@ struct Vector4
     T y;
     T z;
     T w;
+
+    [[nodiscard]]
     auto toBytes() const -> const T*
     {
         return &x;
@@ -101,8 +105,6 @@ using Vector4f = Vector4<float>;
 
 using Vertex3f = Vertex3<float>;
 using Vertices3f = Vertices3<float>;
-
-
 
 namespace vec
 {

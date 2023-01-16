@@ -15,6 +15,7 @@
 #include "math/Types.h"
 #include "Singleton.h"
 
+#include <mutex>
 
 namespace gk::utils
 {
@@ -24,9 +25,9 @@ class KeyboardHandler : public Singleton<KeyboardHandler>
 public:
     using KeyCallback = std::function<void(GLFWwindow*, int, int, int, int)>;
     static auto instance() -> KeyboardHandler&;
-    auto addKeyCallback(KeyCallback callback) -> void;
+    auto addKeyCallback(const KeyCallback& callback) -> void;
 
-    std::unordered_map<int, char> keys = {
+    const std::unordered_map<int, char> keys = {
         {GLFW_KEY_0, '0'},
         {GLFW_KEY_1, '1'},
         {GLFW_KEY_2, '2'},

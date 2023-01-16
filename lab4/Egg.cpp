@@ -52,14 +52,20 @@ auto Egg::makeEggVertices(size_t N) -> std::vector<std::vector<std::pair<Vector3
         {
             const auto u = static_cast<float>(i) / static_cast<float>(N - 1);
             const auto v = static_cast<float>(j) / static_cast<float>(N - 1);
-            vertices[i][j].first.x = static_cast<float>(
-                (-90. * std::pow(u, 5) + 225. * std::pow(u, 4) - 270. * std::pow(u, 3) + 180. * std::pow(u, 2) -
-                 45. * u) * std::cos(std::numbers::pi * v));
-            vertices[i][j].first.y = static_cast<float>(160. * std::pow(u, 4) - 320. * std::pow(u, 3) +
-                                                        160. * std::pow(u, 2) - 5.);
-            vertices[i][j].first.z = static_cast<float>(
-                (-90. * std::pow(u, 5) + 225. * std::pow(u, 4) - 270. * std::pow(u, 3) + 180. * std::pow(u, 2) -
-                 45. * u) * std::sin(std::numbers::pi * v));
+            vertices[i][j].first.x = static_cast<float>((-90. * std::pow(u, 5) +
+                                                         225. * std::pow(u, 4) -
+                                                         270. * std::pow(u, 3) +
+                                                         180. * std::pow(u, 2) -
+                                                         45. * u) * std::cos(std::numbers::pi * v));
+            vertices[i][j].first.y = static_cast<float>(160. * std::pow(u, 4) -
+                                                        320. * std::pow(u, 3) +
+                                                        160. * std::pow(u, 2) -
+                                                        5.);
+            vertices[i][j].first.z = static_cast<float>((-90. * std::pow(u, 5) +
+                                                         225. * std::pow(u, 4) -
+                                                         270. * std::pow(u, 3) +
+                                                         180. * std::pow(u, 2) -
+                                                         45. * u) * std::sin(std::numbers::pi * v));
 
             const auto colorVal = std::lerp(0.f, 1.f, u);
             vertices[i][j].second = {0.5f, colorVal, 0.7f};

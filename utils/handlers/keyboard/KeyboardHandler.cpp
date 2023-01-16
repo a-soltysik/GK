@@ -3,9 +3,9 @@
 namespace gk::utils
 {
 
-auto KeyboardHandler::addKeyCallback(gk::utils::KeyboardHandler::KeyCallback callback) -> void
+auto KeyboardHandler::addKeyCallback(const gk::utils::KeyboardHandler::KeyCallback& callback) -> void
 {
-    keyCallbacks.push_back(std::move(callback));
+    keyCallbacks.push_back(callback);
 }
 
 auto keyCallback(GLFWwindow* window, int key, int scancode, int action, int mods) -> void

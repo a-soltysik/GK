@@ -7,8 +7,6 @@
 namespace gk::gfx
 {
 
-
-
 struct Light
 {
     struct Attenuation
@@ -35,7 +33,7 @@ struct Light
             return;
         }
 
-        const auto lightEnum = IDS[id];
+        const auto lightEnum = IDS.at(id);
         glLightfv(lightEnum, GL_AMBIENT, ambient.toBytes());
         glLightfv(lightEnum, GL_DIFFUSE, diffuse.toBytes());
         glLightfv(lightEnum, GL_SPECULAR, specular.toBytes());

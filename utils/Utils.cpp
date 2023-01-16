@@ -7,6 +7,7 @@
 #include <GL/glu.h>
 
 #include <cstdlib>
+#include <fstream>
 
 #include "Utils.h"
 
@@ -16,8 +17,6 @@ namespace gk::utils
 static auto gBounds    = Vector2f {};
 static auto gNearDepth = 100.f;
 static auto gFarDepth  = 100.f;
-
-
 
 auto configureViewport(Vector2f bounds, float nearDepth, float farDepth) -> void
 {
@@ -78,6 +77,7 @@ auto makeWindow(Vector2i size, bool vsync) -> GLFWwindow*
     }
 
     glfwMakeContextCurrent(window);
+    std::cout << "AAA\n";
     glfwSetFramebufferSizeCallback(window, viewport);
     glfwSwapInterval(vsync ? 1 : 0);
 
@@ -109,6 +109,27 @@ auto spin(float angle) -> void
     glRotatef(angle, 0.f, 0.f, 1.f);
 }
 
+auto getFileContent(const std::filesystem::path& path) -> std::optional<std::vector<char>>
+{
+    auto fin = std::ifstream{path, std::ios::binary};
 
+    if (!fin.good())
+    {
+        return {};
+    }
+
+    fin.seekg(0, std::ios::end);
+    const auto fileSize = fin.tellg();
+    fin.seekg(0, std::ios::beg);
+
+    std::vector<char> result;
+    result.reserve(static_cast<size_t>(fileSize));
+
+    result.insert(result.begin(),
+                  std::istream_iterator<char>(fin),
+                      std::istream_iterator<char>());
+
+    return result;
+}
 
 }
